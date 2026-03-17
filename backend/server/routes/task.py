@@ -1,34 +1,49 @@
 from fastapi import APIRouter
 from database import tasks_collection
-import uuid
+from bson import ObjectId
 
 router = APIRouter()
 
-# CREATE TASK
+# ➕ Add task
 @router.post("/")
-def create_task(task: dict):
-    task["id"] = str(uuid.uuid4())
-    task["completed"] = False
-    tasks_collection.insert_one(task)
-    return {"message": "Task created"}
+def add_task(data: dict):
+    tasks_collection.insert_one(data)
+    return {"message": "Task added"}
 
-# GET TASKS
+
+# 📥 Get tasks
 @router.get("/")
 def get_tasks():
-    tasks = list(tasks_collection.find({}, {"_id": 0}))
+    tasks = list(tasks_collection.find())
+
+    for task in tasks:
+        task["_id"] = str(task["_id"])  # convert ObjectId → string
+
     return tasks
 
-# UPDATE TASK
-@router.put("/{task_id}")
-def update_task(task_id: str):
+
+# ✅ Complete task
+@router.put("/{id}")
+def complete_task(id: str):
     tasks_collection.update_one(
-        {"id": task_id},
+        {"_id": ObjectId(id)},
         {"$set": {"completed": True}}
     )
     return {"message": "Task completed"}
 
-# DELETE TASK
-@router.delete("/{task_id}")
-def delete_task(task_id: str):
-    tasks_collection.delete_one({"id": task_id})
+
+# ✏️ Edit task
+@router.put("/edit/{id}")
+def edit_task(id: str, data: dict):
+    tasks_collection.update_one(
+        {"_id": ObjectId(id)},
+        {"$set": {"title": data["title"]}}
+    )
+    return {"message": "Task updated"}
+
+
+# ❌ Delete task
+@router.delete("/{id}")
+def delete_task(id: str):
+    tasks_collection.delete_one({"_id": ObjectId(id)})
     return {"message": "Task deleted"}
