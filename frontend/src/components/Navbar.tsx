@@ -44,7 +44,7 @@ const Navbar: React.FC<Props> = ({ dark, toggleTheme }) => {
           to="/"
           className="text-lg md:text-xl font-bold text-gray-800 dark:text-white"
         >
-          🍅 Pomodoro
+          🍅 Nexchakra Pomodoro
         </Link>
 
         {/* 💻 Desktop */}

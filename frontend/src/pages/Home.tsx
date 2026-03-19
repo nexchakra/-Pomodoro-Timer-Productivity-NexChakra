@@ -66,7 +66,7 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
           <h1 className="text-xl font-bold text-gray-800 dark:text-white">
-            🍅 Pomodoro
+            🍅Nexchakra Pomodoro
           </h1>
 
           {/* Desktop */}
@@ -197,7 +197,7 @@ const Home: React.FC = () => {
 
       {/* Footer */}
       <footer className="text-center py-6 text-gray-500 dark:text-gray-400">
-        © 2026 Pomodoro App • Built with ❤️
+        © 2026  Nexchakra Pomodoro App • Built with ❤️
       </footer>
     </div>
   );

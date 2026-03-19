@@ -67,7 +67,7 @@ const Login: React.FC = () => {
       <div className="w-full md:w-1/2 bg-gradient-to-br from-red-500 to-orange-500 text-white flex flex-col justify-center items-center px-6 py-10">
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-center">
-          🍅 Pomodoro Focus
+          🍅 Nexchakra Pomodoro Focus
         </h1>
 
         <p className="text-xs sm:text-sm md:text-lg text-center max-w-md leading-relaxed">

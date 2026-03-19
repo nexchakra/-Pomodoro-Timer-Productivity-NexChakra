@@ -47,7 +47,7 @@ const Signup: React.FC = () => {
       <div className="w-full md:w-1/2 bg-gradient-to-br from-green-500 to-emerald-600 text-white flex flex-col justify-center items-center px-6 py-10">
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-center">
-          🚀 Join Pomodoro
+          🚀 Join  Nexchakra Pomodoro
         </h1>
 
         <p className="text-xs sm:text-sm md:text-lg text-center max-w-md leading-relaxed">
