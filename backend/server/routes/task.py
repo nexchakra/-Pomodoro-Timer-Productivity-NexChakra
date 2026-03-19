@@ -2,7 +2,8 @@ from fastapi import APIRouter
 from database import tasks_collection
 from bson import ObjectId
 
-router = APIRouter()
+router = APIRouter()   # ❌ REMOVE prefix here
+
 
 # ➕ Add task
 @router.post("/")
@@ -11,28 +12,39 @@ def add_task(data: dict):
     return {"message": "Task added"}
 
 
-# 📥 Get tasks
-@router.get("/")
-def get_tasks():
+# 📥 Get ALL tasks (optional)
+@router.get("/all")
+def get_all_tasks():
     tasks = list(tasks_collection.find())
 
     for task in tasks:
-        task["_id"] = str(task["_id"])  # convert ObjectId → string
+        task["_id"] = str(task["_id"])
 
     return tasks
 
 
-# ✅ Complete task
+# ✅ Get USER tasks
+@router.get("/{user}")
+def get_user_tasks(user: str):
+    tasks = list(tasks_collection.find({"user": user}))
+
+    for task in tasks:
+        task["_id"] = str(task["_id"])
+
+    return tasks
+
+
+# ✅ Update (toggle complete)
 @router.put("/{id}")
-def complete_task(id: str):
+def update_task(id: str, data: dict):
     tasks_collection.update_one(
         {"_id": ObjectId(id)},
-        {"$set": {"completed": True}}
+        {"$set": data}
     )
-    return {"message": "Task completed"}
+    return {"message": "Task updated"}
 
 
-# ✏️ Edit task
+# ✏️ Edit title
 @router.put("/edit/{id}")
 def edit_task(id: str, data: dict):
     tasks_collection.update_one(
@@ -42,7 +54,7 @@ def edit_task(id: str, data: dict):
     return {"message": "Task updated"}
 
 
-# ❌ Delete task
+# ❌ Delete
 @router.delete("/{id}")
 def delete_task(id: str):
     tasks_collection.delete_one({"_id": ObjectId(id)})
